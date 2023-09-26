@@ -1,3 +1,20 @@
+<?php  
+
+   // Connect to the Database 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "notes";
+
+// Create a connection
+$conn = mysqli_connect($servername, $username, $password, $database);
+
+// Die if connection was not successful
+if (!$conn){
+  die("Sorry we failed to connect: ". mysqli_connect_error());
+}
+
+ ?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -33,7 +50,7 @@
             <h2>iNotes </h2>
             <div class="form-group">
               <label for="title">Note Title</label>
-              <input type="text" name="title" class="form-control" id="title" aria-describedby="emailHelp" placeholder="Enter email">
+              <input type="text" name="title" class="form-control" id="title" aria-describedby="emailHelp" >
               
             </div>
             <div class="form-group">
@@ -43,6 +60,20 @@
             
             <button type="submit" class="btn btn-primary my-3 ">Add Note</button>
           </form>
+       </div>
+
+       <div class="container">
+
+       <?php 
+        $sql= "SELECT * FROM `notes`" ;
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)){
+          // echo var_dump($row);
+          echo $row['snu'] .  ". Hello ". $row['name'] ." Welcome to ". $row['dest'];
+          echo "<br>";
+      }
+       ?>
+
        </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
