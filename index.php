@@ -1,5 +1,5 @@
 <?php  
-
+// INSERT INTO `notes` (`snu`, `title`, `description`, `tstamp`) VALUES ('', 'bookssdkfjs', 'asd,fasodfiasd', current_timestamp());
    // Connect to the Database 
 $servername = "localhost";
 $username = "root";
@@ -69,7 +69,7 @@ if (!$conn){
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_assoc($result)){
           // echo var_dump($row);
-          echo $row['snu'] .  ". Hello ". $row['name'] ." Welcome to ". $row['dest'];
+          echo $row['sno'] .  ". title". $row['title'] ." desc id  ". $row['description'];
           echo "<br>";
       }
        ?>
