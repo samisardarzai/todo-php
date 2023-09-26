@@ -13,21 +13,6 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 if (!$conn){
   die("Sorry we failed to connect: ". mysqli_connect_error());
 }
-//  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-//      $title= $_POST["title"];
-//      $description = $_POST["description"]
-    
-//       $sql = "INSERT INTO `notes1` (`title`, `description`, ) VALUES ('$title','$description')";
-//       $result = mysqli_query($conn,$sql);
-
-//      if($result){
-//       echo "the record add";
-//      }
-//      else {
-//       echo "not add ";
-//       mysqli_error($conn);
-//      }
-//  }
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
   $title = $_POST["title"];
   $description = $_POST["description"];
@@ -58,6 +43,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   </head>
   <body class="">
+     <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit this Note</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="/crud/index.php?update=true" method="POST">
+          <div class="modal-body">
+            <input type="hidden" name="snoEdit" id="snoEdit">
+            <div class="form-group">
+              <label for="title">Note Title</label>
+              <input type="text" class="form-control" id="titleEdit" name="titleEdit" aria-describedby="emailHelp">
+            </div>
+
+            <div class="form-group">
+              <label for="desc">Note Description</label>
+              <textarea class="form-control" id="descriptionEdit" name="descriptionEdit" rows="3"></textarea>
+            </div> 
+          </div>
+          <div class="modal-footer d-block mr-auto">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
     <nav class="navbar navbar-expand-lg  bg-body-tertiary" data-bs-theme="dark" >
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Todo Php</a>
@@ -121,12 +138,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
        <?php 
         $sql= "SELECT * FROM `notes1`" ;
         $result = mysqli_query($conn, $sql);
+        $snu=0;
         while($row = mysqli_fetch_assoc($result)){
+          $snu= $snu+1;
           echo  "<tr>
-          <th scope='row'>" . $row['snu']. "</th>
+          <th scope='row'>" . $snu. "</th>
           <td>". $row['title'] ."</td>
           <td>". $row['description'] ."</td>
-          <td>actions</td>
+          <td> <button class='edit btn btn-sm btn-primary' id=".$row['snu'].">Edit</button> <button class='delete btn btn-sm btn-primary' id=d".$row['snu'].">Delete</button>  </td>
           </tr>";
         
       }
